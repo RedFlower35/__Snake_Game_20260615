@@ -1,20 +1,34 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# 霓虹貪食蛇 (Neon Snake)
 
-# Run and deploy your AI Studio app
+這是一個使用純前端技術（HTML5、CSS3、JavaScript）開發的霓虹風格貪食蛇遊戲。專案已自 Next.js / TypeScript 框架簡化為獨立靜態網頁，無需安裝 Node.js 或任何依賴套件，直接使用瀏覽器開啟即可執行。
 
-This contains everything you need to run your app locally.
+## 遊戲特色
 
-View your app in AI Studio: https://ai.studio/apps/7a0cf6f0-fb7a-4a35-8ce4-f0ab7ed787d0
+- **現代霓虹美學**：採用深綠色霓虹背景與發光特效，提供極佳的視覺體驗。
+- **動態蛇頭與動畫**：蛇頭會根據移動方向旋轉，並有動態的吐信與閃爍動畫。
+- **吃食物音效**：使用 Web Audio API 即時合成復古電子吃食音效，無須下載額外的音訊檔案。
+- **最高分紀錄**：利用瀏覽器的 `localStorage` 自動儲存並追蹤玩家的歷史最高分數。
+- **完全自適應佈局**：支援行動裝置與桌面瀏覽器。
 
-## Run Locally
+## 檔案說明
 
-**Prerequisites:**  Node.js
+本專案結構非常單純，僅包含以下核心檔案：
+- **[index.html](file:///d:/Study/AI/115_AI寫程式/GitHub/__Snake_Game_20260615/index.html)**：遊戲的網頁骨架，定義了霓虹標題、計分板、遊戲畫板以及手機專用虛擬按鍵。
+- **[style.css](file:///d:/Study/AI/115_AI寫程式/GitHub/__Snake_Game_20260615/style.css)**：遊戲的視覺美化檔，包含霓虹發光特效、貪食蛇與食物外觀、動畫效果以及跨平台的響應式版面配置。
+- **[game.js](file:///d:/Study/AI/115_AI寫程式/GitHub/__Snake_Game_20260615/game.js)**：核心邏輯控制，包含遊戲迴圈、碰撞偵測、鍵盤控制、行動端觸控與手勢偵測，並利用 Web Audio API 產生復古音效。
+
+## 如何執行
+
+> [!NOTE]
+> 本專案已完全轉為靜態網頁，**不需要**執行 `npm install` 或安裝任何 Node.js 依賴套件。
 
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1. 下載或複製本專案的程式碼至您的電腦。
+2. 在瀏覽器中直接雙擊開啟 `index.html` 即可開始遊玩！
+3. （選用）您也可以使用 VS Code 的 `Live Server` 擴充功能或其他靜態網頁伺服器開啟本專案。
+
+## 操作說明
+
+- 使用鍵盤的 **方向鍵 (↑, ↓, ←, →)** 控制蛇的移動方向。
+- 當蛇碰撞到牆壁或自己的身體時遊戲即結束。
+- 點擊「重新開始」或「重置遊戲」按鈕可重新開始挑戰新遊戲。

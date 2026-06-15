@@ -1,0 +1,409 @@
+/* 全域樣式設定與變數 */
+:root {
+    --bg-dark: #050c05;
+    --bg-header: #0a1f0a;
+    --border-color: #1a3a1a;
+    --neon-green: #4ade80;
+    --neon-green-glow: rgba(74, 222, 128, 0.8);
+    --neon-green-dark: #22c55e;
+    --neon-yellow: #facc15;
+    --neon-yellow-glow: rgba(250, 204, 21, 0.8);
+    --text-color: #e0f0e0;
+    --grid-size: 20;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    background-image: radial-gradient(circle at 50% 50%, var(--bg-header) 0%, var(--bg-dark) 100%);
+    color: var(--text-color);
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Header 樣式 */
+.game-header {
+    width: 100%;
+    padding: 1.5rem 2rem;
+    background-color: var(--bg-header);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.game-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green-glow);
+}
+
+.scoreboard {
+    display: flex;
+    gap: 2rem;
+}
+
+.score-box {
+    text-align: center;
+}
+
+.score-label {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin-bottom: 0.2rem;
+}
+
+.score-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+#score {
+    color: var(--neon-yellow);
+    text-shadow: 0 0 8px rgba(250, 204, 21, 0.5);
+}
+
+#high-score {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+/* 主要遊戲區 */
+.game-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+/* 遊戲畫板容器 */
+.board-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 480px;
+    background-color: #020502;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.board {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* 網格背景 */
+.grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(var(--border-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+    background-size: 5% 5%; /* 20x20 網格 */
+    pointer-events: none;
+}
+
+/* 蛇與食物定位 */
+.game-element {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / var(--grid-size));
+    height: calc(100% / var(--grid-size));
+}
+
+/* 食物樣式 */
+.food-element {
+    z-index: 10;
+}
+
+.food-inner {
+    width: 90%;
+    height: 90%;
+    background-color: var(--neon-yellow);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--neon-yellow-glow);
+    animation: bounce 0.6s infinite alternate, pulse 1.2s infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 食物的小葉子 */
+.food-inner::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    width: 4px;
+    height: 6px;
+    background-color: #166534;
+    border-radius: 50%;
+}
+
+/* 蛇頭 */
+.snake-head {
+    width: 90%;
+    height: 90%;
+    background-color: var(--neon-green);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--neon-green-glow);
+    position: relative;
+    z-index: 5;
+}
+
+/* 蛇吐信子 */
+.snake-tongue {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 4px;
+    background-color: #ef4444;
+    border-radius: 2px;
+    transform-origin: left center;
+    animation: pulse 0.15s infinite alternate;
+}
+
+/* 方向旋轉 */
+.rotate-up { transform: translate(-50%, -50%) rotate(-90deg); }
+.rotate-down { transform: translate(-50%, -50%) rotate(90deg); }
+.rotate-left { transform: translate(-50%, -50%) rotate(180deg); }
+.rotate-right { transform: translate(-50%, -50%) rotate(0deg); }
+
+/* 蛇身與蛇尾 */
+.snake-body {
+    width: 95%;
+    height: 95%;
+    background-color: var(--neon-green-dark);
+    border-radius: 6px;
+    z-index: 4;
+}
+
+.snake-tail {
+    width: 80%;
+    height: 80%;
+    background-color: var(--neon-green-dark);
+    border-radius: 50%;
+    transform: scale(0.8);
+    z-index: 3;
+}
+
+/* 遊戲結束畫面遮罩 */
+.game-over-screen {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(2, 5, 2, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.game-over-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.game-over-content {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid #ef4444;
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+    background-color: rgba(10, 31, 10, 0.9);
+}
+
+.game-over-content h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #ef4444;
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 0.2rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+    animation: flash 1s infinite alternate;
+}
+
+.game-over-content p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.game-over-content span {
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+    color: var(--neon-yellow);
+    font-size: 1.4rem;
+}
+
+/* 控制區域與按鈕 */
+.controls-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.action-btn, .restart-btn {
+    padding: 0.8rem 2rem;
+    background-color: var(--neon-green);
+    color: #050c05;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px var(--neon-green-glow);
+}
+
+.action-btn:hover, .restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 222, 128, 1);
+}
+
+.action-btn:active, .restart-btn:active {
+    transform: translateY(1px);
+}
+
+.keyboard-tips {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+}
+
+.key {
+    background-color: var(--bg-header);
+    border: 1px solid var(--border-color);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* 虛擬鍵盤控制區樣式 */
+.mobile-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.5rem 0;
+    width: 100%;
+}
+
+.ctrl-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.ctrl-btn {
+    width: 56px;
+    height: 56px;
+    background-color: var(--bg-header);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--neon-green);
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: all 0.1s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    touch-action: manipulation;
+}
+
+.ctrl-btn:active {
+    transform: scale(0.92);
+    background-color: var(--neon-green);
+    color: #050c05;
+    box-shadow: 0 0 15px var(--neon-green-glow);
+    border-color: var(--neon-green);
+}
+
+/* 動畫設定 */
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-4px); }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+@keyframes flash {
+    0% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+/* 手機版自適應優化 */
+@media (max-width: 500px) {
+    .game-header {
+        padding: 1rem;
+    }
+    
+    .game-title {
+        font-size: 1.4rem;
+    }
+    
+    .game-main {
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .game-over-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .ctrl-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+    }
+}
+

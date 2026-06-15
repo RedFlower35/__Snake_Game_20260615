@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Snake - 霓虹貪食蛇遊戲</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 頂部 Header -->
+        <header class="game-header">
+            <h1 class="game-title">Neon Snake</h1>
+            <div class="scoreboard">
+                <div class="score-box">
+                    <span class="score-label">SCORE</span>
+                    <span id="score" class="score-value">00000</span>
+                </div>
+                <div class="score-box">
+                    <span class="score-label">HIGH</span>
+                    <span id="high-score" class="score-value">00000</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要遊戲區域 -->
+        <main class="game-main">
+            <div id="game-board-wrapper" class="board-wrapper">
+                <div id="game-board" class="board">
+                    <!-- 網格背景 -->
+                    <div class="grid-overlay"></div>
+                    <!-- 食物和蛇身將由 JS 動態生成並放入此處 -->
+                </div>
+                <!-- 遊戲結束遮罩 -->
+                <div id="game-over-screen" class="game-over-screen hidden">
+                    <div class="game-over-content">
+                        <h2>GAME OVER</h2>
+                        <p>最終得分：<span id="final-score">0</span></p>
+                        <button id="restart-btn" class="restart-btn">重新開始</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 虛擬按鍵控制區 (手機/平板適用) -->
+            <div class="mobile-controls">
+                <div class="ctrl-row">
+                    <button id="ctrl-up" class="ctrl-btn ctrl-up">▲</button>
+                </div>
+                <div class="ctrl-row">
+                    <button id="ctrl-left" class="ctrl-btn ctrl-left">◀</button>
+                    <button id="ctrl-down" class="ctrl-btn ctrl-down">▼</button>
+                    <button id="ctrl-right" class="ctrl-btn ctrl-right">▶</button>
+                </div>
+            </div>
+
+            <!-- 操作按鈕 (提示 & 重新開始) -->
+            <div class="controls-area">
+                <button id="reset-btn" class="action-btn">重置遊戲</button>
+                <div class="keyboard-tips">
+                    <p>鍵盤方向鍵或點擊上方虛擬鍵控制移動，也可在遊戲區滑動螢幕</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
