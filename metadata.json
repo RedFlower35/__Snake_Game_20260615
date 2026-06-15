@@ -1,0 +1,6 @@
+{
+  "name": "Snake Game",
+  "description": "A classic, polished snake game built with React, TypeScript, and Tailwind CSS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
