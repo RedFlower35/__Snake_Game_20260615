@@ -222,6 +222,75 @@ body {
     z-index: 3;
 }
 
+/* 遊戲開始畫面遮罩 */
+.game-start-screen {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(2, 5, 2, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 101;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.game-start-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.game-start-content {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid var(--neon-green);
+    box-shadow: 0 0 30px var(--neon-green-glow);
+    background-color: rgba(10, 31, 10, 0.9);
+}
+
+.game-start-content h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--neon-green);
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 0.2rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px var(--neon-green-glow);
+    animation: pulse 1.5s infinite alternate;
+}
+
+.game-start-content p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+.start-btn {
+    padding: 0.8rem 2rem;
+    background-color: var(--neon-green);
+    color: #050c05;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px var(--neon-green-glow);
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 222, 128, 1);
+}
+
+.start-btn:active {
+    transform: translateY(1px);
+}
+
 /* 遊戲結束畫面遮罩 */
 .game-over-screen {
     position: absolute;

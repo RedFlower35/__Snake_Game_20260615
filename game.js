@@ -20,6 +20,8 @@ const finalScoreEl = document.getElementById('final-score');
 const restartBtn = document.getElementById('restart-btn');
 const resetBtn = document.getElementById('reset-btn');
 
+let hasGameStarted = false;
+
 // 初始化顯示最高分
 updateHighScoreDisplay();
 
@@ -60,7 +62,32 @@ function updateHighScoreDisplay() {
     highScoreEl.textContent = formatScore(highScore);
 }
 
-// 重新開始遊戲
+// 初始化遊戲狀態（不啟動定時器）
+function initGame() {
+    snake = [{ x: 10, y: 10 }];
+    direction = 'RIGHT';
+    score = 0;
+    scoreEl.textContent = formatScore(score);
+    isGameOver = false;
+    hasGameStarted = false;
+    
+    resetBtn.textContent = '開始遊戲';
+    gameOverScreen.classList.add('hidden');
+    generateFood();
+    render();
+}
+
+// 開始遊戲
+function startGame() {
+    hasGameStarted = true;
+    resetBtn.textContent = '重置遊戲';
+    
+    if (gameInterval) clearInterval(gameInterval);
+    gameInterval = setInterval(moveSnake, INITIAL_SPEED);
+    playEatSound(); // 啟動 AudioContext
+}
+
+// 重新開始遊戲 (從 GameOver 或重置按鈕)
 function resetGame() {
     snake = [{ x: 10, y: 10 }];
     direction = 'RIGHT';
@@ -74,6 +101,8 @@ function resetGame() {
     score = 0;
     scoreEl.textContent = formatScore(score);
     isGameOver = false;
+    hasGameStarted = true;
+    resetBtn.textContent = '重置遊戲';
     
     gameOverScreen.classList.add('hidden');
     generateFood();
@@ -83,6 +112,8 @@ function resetGame() {
     
     render();
 }
+
+
 
 // 生成食物位置（避開蛇身）
 function generateFood() {
@@ -215,6 +246,7 @@ function render() {
 
 // 監聽鍵盤事件
 window.addEventListener('keydown', (e) => {
+    if (!hasGameStarted || isGameOver) return;
     switch (e.key) {
         case 'ArrowUp':
             if (direction !== 'DOWN') direction = 'UP';
@@ -233,15 +265,19 @@ window.addEventListener('keydown', (e) => {
 
 // 監聽虛擬按鍵事件
 document.getElementById('ctrl-up').addEventListener('click', () => {
+    if (!hasGameStarted || isGameOver) return;
     if (direction !== 'DOWN') direction = 'UP';
 });
 document.getElementById('ctrl-down').addEventListener('click', () => {
+    if (!hasGameStarted || isGameOver) return;
     if (direction !== 'UP') direction = 'DOWN';
 });
 document.getElementById('ctrl-left').addEventListener('click', () => {
+    if (!hasGameStarted || isGameOver) return;
     if (direction !== 'RIGHT') direction = 'LEFT';
 });
 document.getElementById('ctrl-right').addEventListener('click', () => {
+    if (!hasGameStarted || isGameOver) return;
     if (direction !== 'LEFT') direction = 'RIGHT';
 });
 
@@ -255,7 +291,7 @@ board.addEventListener('touchstart', (e) => {
 }, { passive: true });
 
 board.addEventListener('touchend', (e) => {
-    if (isGameOver) return;
+    if (!hasGameStarted || isGameOver) return;
     
     const touchEndX = e.changedTouches[0].clientX;
     const touchEndY = e.changedTouches[0].clientY;
@@ -289,8 +325,14 @@ board.addEventListener('touchend', (e) => {
 
 // 監聽按鈕事件
 restartBtn.addEventListener('click', resetGame);
-resetBtn.addEventListener('click', resetGame);
+resetBtn.addEventListener('click', () => {
+    if (!hasGameStarted) {
+        startGame();
+    } else {
+        resetGame();
+    }
+});
 
-// 啟動遊戲
-resetGame();
+// 初始化遊戲畫面，顯示開始畫面
+initGame();
 
